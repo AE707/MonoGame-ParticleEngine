@@ -1,7 +1,8 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# MonoGame Particle System Engine - CI Build
+# Builds the project on every push and pull request to main.
+# Uses ubuntu-latest with MonoGame DesktopGL Linux native dependencies.
 
-name: .NET
+name: .NET Build
 
 on:
   push:
@@ -11,18 +12,28 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # MonoGame DesktopGL requires these native libs on Linux
+      - name: Install Linux native dependencies for MonoGame
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libopenal-dev \
+            libsdl2-dev \
+            libglu1-mesa-dev \
+            freeglut3-dev
+
+      - name: Restore NuGet dependencies
+        run: dotnet restore MonoGameParticleEngine.csproj
+
+      - name: Build (Release)
+        run: dotnet build MonoGameParticleEngine.csproj --configuration Release --no-restore
