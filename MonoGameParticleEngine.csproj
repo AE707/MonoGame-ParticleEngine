@@ -13,15 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- MonoGame DesktopGL: runs on Windows, macOS, and Linux -->
+    <!-- MonoGame DesktopGL: cross-platform (Windows / macOS / Linux) -->
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-    <!-- MonoGame Content Pipeline tools (needed for .fx HLSL shader compilation) -->
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- HLSL shader: mark as MonoGame effect content -->
-    <MonoGameContentReference Include="Effects\additive_blend.fx" />
-  </ItemGroup>
+  <!--
+    NOTE: The HLSL shader (Effects/additive_blend.fx) is included as source code
+    for documentation and local development reference.
+    MGCB shader compilation requires the MonoGame Content Pipeline desktop tools
+    which are not available in the Linux CI environment.
+    To compile shaders locally, use the MonoGame Content Pipeline (MGCB Editor)
+    on Windows or macOS before running the project.
+  -->
 
 </Project>
