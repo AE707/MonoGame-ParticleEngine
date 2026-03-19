@@ -20,13 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Include all C# source files in subdirectories -->
-    <Compile Include="Core\*.cs" />
-    <Compile Include="Demos\*.cs" />
-    <Compile Include="*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!-- HLSL shader: mark as MonoGame effect content -->
     <MonoGameContentReference Include="Effects\additive_blend.fx" />
   </ItemGroup>
